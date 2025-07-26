@@ -49,9 +49,9 @@ def generate_sentiment_wordclouds(df, text_column='teks', sentiment_column='labe
 
     # Pastikan kolom 'teks' adalah string, konversi list ke string jika perlu
     df_sentiment['processed_text_for_wc'] = df_sentiment[text_column].apply(lambda x:
-                                                                         " ".join(map(str, x)) if isinstance(x, (list, np.ndarray)) else
-                                                                         (str(x) if not pd.isna(x) else "")
-                                                                        )
+                                                                            " ".join(map(str, x)) if isinstance(x, (list, np.ndarray)) else
+                                                                            (str(x) if not pd.isna(x) else "")
+                                                                            )
 
     # Pastikan label sentimen di mapping ke string 'Positif'/'Negatif'
     label_mapping = {0: 'Negatif', 1: 'Positif'} # Sesuaikan ini jika label Anda berbeda
@@ -319,13 +319,13 @@ with tab1:
 
         st.subheader("Jumlah Data")
         fig_plotly_pie = px.pie(label_counts_df,
-                                  names='Label',
-                                  values='Jumlah Data',
-                                  title='PIE CHART',
-                                  color_discrete_sequence=sns.color_palette('viridis', n_colors=len(label_counts_df)).as_hex(),
-                                  hole=0.3,
-                                  height=450,
-                                  width=450
+                                 names='Label',
+                                 values='Jumlah Data',
+                                 title='PIE CHART',
+                                 color_discrete_sequence=sns.color_palette('viridis', n_colors=len(label_counts_df)).as_hex(),
+                                 hole=0.3,
+                                 height=450,
+                                 width=450
                                  )
         fig_plotly_pie.update_traces(textinfo='percent', textfont_color='white', marker=dict(line=dict(color='#000000', width=1)))
         fig_plotly_pie.update_layout(
@@ -380,7 +380,7 @@ with tab1:
         ax_test_bar.spines['right'].set_visible(False)
         for p in ax_test_bar.patches:
             ax_test_bar.annotate(f'{int(p.get_height())}', (p.get_x() + p.get_width() / 2., p.get_height()),
-                                  ha='center', va='center', xytext=(0, 10), textcoords='offset points', color='black')
+                                 ha='center', va='center', xytext=(0, 10), textcoords='offset points', color='black')
         st.pyplot(fig_test_bar)
 
     st.info("Data telah berhasil dimuat dan dibagi menjadi set pelatihan dan pengujian, memastikan pengambilan sampel bertingkat untuk distribusi kelas yang seimbang.")
@@ -517,8 +517,8 @@ with tab2:
             for p in ax_bar_pos.patches:
                 width = p.get_width()
                 ax_bar_pos.text(width + 20, p.get_y() + p.get_height() / 2,
-                                f'{int(width)}',
-                                va='center', color='white')
+                                 f'{int(width)}',
+                                 va='center', color='white')
             
             plt.tight_layout()
             st.pyplot(fig_bar_pos)
@@ -552,8 +552,8 @@ with tab2:
             for p in ax_bar_neg.patches:
                 width = p.get_width()
                 ax_bar_neg.text(width + 20, p.get_y() + p.get_height() / 2,
-                                f'{int(width)}',
-                                va='center', color='white')
+                                 f'{int(width)}',
+                                 va='center', color='white')
             
             plt.tight_layout()
             st.pyplot(fig_bar_neg)
@@ -624,7 +624,7 @@ with tab3:
     col_gnb_metrics, col_svm_metrics = st.columns(2) # Gunakan 2 kolom untuk metrik model
 
     with col_gnb_metrics:
-        st.markdown("<h4 style='text-align: left; color: white;'>Gaussian Naive Bayes (GNB)</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='text-align: left; color: white;'>Naive Bayes Classifier</h4>", unsafe_allow_html=True) # <<< PERUBAHAN DI SINI
         
         # Prediksi untuk data latih GNB
         y_pred_gnb_train = best_model_gnb.predict(X_train)
@@ -641,7 +641,7 @@ with tab3:
         f1_gnb_test = f1_score(y_test, y_pred_gnb_test, average='weighted', zero_division=0)
 
         # --- Tampilkan Tabel Metrik GNB ---
-        st.subheader("Tabel Metrik GNB") # Subheader untuk tabel
+        st.subheader("Tabel Metrik Naive Bayes Classifier") # <<< PERUBAHAN DI SINI
         data_gnb_table = {
             'Metrik': ['Akurasi', 'Presisi', 'Recall', 'F1-Score'],
             'Data Latih (Train)': [accuracy_gnb_train, precision_gnb_train, recall_gnb_train, f1_gnb_train],
@@ -659,7 +659,7 @@ with tab3:
 
 
         # --- Tampilkan Diagram Bar GNB ---
-        st.subheader("Diagram Performa GNB") # Subheader untuk diagram
+        st.subheader("Diagram Performa Naive Bayes Classifier") # <<< PERUBAHAN DI SINI
         metrics_gnb_for_plot = pd.DataFrame({
             'Metrik': ['Akurasi', 'Presisi', 'Recall', 'F1-Score', 'Akurasi', 'Presisi', 'Recall', 'F1-Score'],
             'Tipe Data': ['Data Latih (Train)'] * 4 + ['Data Uji (Test)'] * 4,
@@ -674,7 +674,7 @@ with tab3:
         sns.barplot(x='Metrik', y='Skor', hue='Tipe Data', data=metrics_gnb_for_plot, ax=ax_gnb_metrics,
                     palette='viridis') # Menggunakan viridis
 
-        ax_gnb_metrics.set_title('Performa Naive Bayes', color='white', fontsize=12) # Judul lebih pendek
+        ax_gnb_metrics.set_title('Performa Naive Bayes Classifier', color='white', fontsize=12) # <<< PERUBAHAN DI SINI
         ax_gnb_metrics.set_xlabel('')
         ax_gnb_metrics.set_ylabel('Skor', color='white')
         ax_gnb_metrics.tick_params(axis='x', colors='white')
@@ -786,11 +786,11 @@ with tab3:
     st.markdown("---") # Garis pemisah sebelum kesimpulan
 
     st.subheader("Kesimpulan Performa Model Keseluruhan")
-    st.info("Berikut adalah ringkasan performa model Gaussian Naive Bayes dan Support Vector Machine pada data uji.")
+    st.info("Berikut adalah ringkasan performa model Naive Bayes Classifier dan Support Vector Machine pada data uji.") # <<< PERUBAHAN DI SINI
 
     # Membuat DataFrame untuk tabel kesimpulan
     summary_data = {
-        'Model': ['Gaussian Naive Bayes', 'Support Vector Machine'],
+        'Model': ['Naive Bayes Classifier', 'Support Vector Machine'], # <<< PERUBAHAN DI SINI
         'F1-Score CV (Train)': [st.session_state['best_score_gnb'], st.session_state['best_score_svm']],
         'Akurasi (Test)': [accuracy_gnb_test, accuracy_svm_test],
         'F1-Score (Test)': [f1_gnb_test, f1_svm_test],
@@ -829,9 +829,9 @@ with tab4:
     best_model_gnb = st.session_state['best_model_gnb']
     best_model_svm = st.session_state['best_model_svm']
 
-    # --- Kolom Kiri: Evaluasi Gaussian Naive Bayes (GNB) ---
+    # --- Kolom Kiri: Evaluasi Naive Bayes Classifier ---
     with col_gnb_eval:
-        st.markdown("<h4 style='text-align: left; color: white;'>Gaussian Naive Bayes (GNB)</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='text-align: left; color: white;'>Naive Bayes Classifier</h4>", unsafe_allow_html=True) # <<< PERUBAHAN DI SINI
         st.markdown(f"Konfigurasi: `{st.session_state['best_params_gnb']}`") # Tampilkan parameter terbaik
 
         y_pred_nb = best_model_gnb.predict(X_test)
@@ -848,7 +848,7 @@ with tab4:
         df_report_nb_display = df_report_nb[~df_report_nb['Class/Metric'].isin(['accuracy', 'macro avg', 'weighted avg'])]
         st.dataframe(df_report_nb_display.style.format("{:.2f}", subset=['precision', 'recall', 'f1-score', 'support']), use_container_width=True)
         
-        st.write(f"**Akurasi (GNB): `{accuracy_score(y_test, y_pred_nb):.4f}`**")
+        st.write(f"**Akurasi (Naive Bayes Classifier): `{accuracy_score(y_test, y_pred_nb):.4f}`**") # <<< PERUBAHAN DI SINI
         
         st.write("##### Matriks Konfusi") # Subheader lebih kecil
         cm_nb = confusion_matrix(y_test, y_pred_nb)
@@ -909,11 +909,11 @@ with tab4:
     # Gabungkan df_test_display dengan prediksi dari kedua model
     df_results = df_test_display.copy()
     df_results['True Label'] = df_results['label'].map({0: 'Negatif', 1: 'Positif'})
-    df_results['Predicted Label (GNB)'] = pd.Series(y_pred_nb).map({0: 'Negatif', 1: 'Positif'})
+    df_results['Predicted Label (Naive Bayes Classifier)'] = pd.Series(y_pred_nb).map({0: 'Negatif', 1: 'Positif'}) # <<< PERUBAHAN DI SINI
     df_results['Predicted Label (SVM)'] = pd.Series(y_pred_svm).map({0: 'Negatif', 1: 'Positif'})
 
     # Ambil kolom yang relevan untuk ditampilkan
-    display_cols = ['teks', 'True Label', 'Predicted Label (GNB)', 'Predicted Label (SVM)']
+    display_cols = ['teks', 'True Label', 'Predicted Label (Naive Bayes Classifier)', 'Predicted Label (SVM)'] # <<< PERUBAHAN DI SINI
     
     # Konversi kolom 'teks' dari list menjadi string untuk tampilan
     df_results_display = df_results[display_cols].copy()
@@ -930,7 +930,7 @@ with tab4:
     st.info("Ringkasan metrik performa utama untuk setiap model pada data uji.")
 
     # Hitung ulang metrik untuk kesimpulan agar konsisten dengan yang ditampilkan di atas
-    # GNB
+    # Naive Bayes Classifier
     accuracy_gnb_test_final = accuracy_score(y_test, y_pred_nb)
     precision_gnb_test_final = precision_score(y_test, y_pred_nb, average='weighted', zero_division=0)
     recall_gnb_test_final = recall_score(y_test, y_pred_nb, average='weighted', zero_division=0)
@@ -944,7 +944,7 @@ with tab4:
 
     # Membuat DataFrame untuk tabel kesimpulan
     summary_data_final = {
-        'Model': ['Gaussian Naive Bayes', 'Support Vector Machine'],
+        'Model': ['Naive Bayes Classifier', 'Support Vector Machine'], # <<< PERUBAHAN DI SINI
         'Akurasi (Test)': [accuracy_gnb_test_final, accuracy_svm_test_final],
         'Presisi (Test)': [precision_gnb_test_final, precision_svm_test_final],
         'Recall (Test)': [recall_gnb_test_final, recall_svm_test_final],
