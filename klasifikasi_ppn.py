@@ -11,15 +11,11 @@ import os
 import plotly.express as px # Import plotly.express
 import ast
 import nltk
-import nltk
-from nltk.downloader import DownloadError
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
 import re
 from collections import Counter # Untuk menghitung kata populer
 import io # Untuk download button
-
-import nltk
 
 # Coba unduh data NLTK yang dibutuhkan
 try:
