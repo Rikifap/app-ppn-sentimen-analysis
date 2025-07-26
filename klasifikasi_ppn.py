@@ -17,11 +17,20 @@ import re
 from collections import Counter # Untuk menghitung kata populer
 import io # Untuk download button
 
-# Download NLTK stopwords (hanya perlu sekali)
+import nltk
+
+# Coba unduh data NLTK yang dibutuhkan
 try:
     nltk.data.find('corpora/stopwords')
-except nltk.downloader.DownloadError:
+except nltk.downloader.DownloadError: # Ini baris yang error
     nltk.download('stopwords')
+
+try:
+    nltk.data.find('tokenizers/punkt')
+except nltk.downloader.DownloadError: # Ini baris yang error
+    nltk.download('punkt')
+
+# ... tambahkan untuk data NLTK lain yang Anda gunakan
 
 # Atur konfigurasi halaman Streamlit
 st.set_page_config(layout="wide", page_title="Dashboard Analisis Sentimen")
