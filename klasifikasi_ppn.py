@@ -11,6 +11,8 @@ import os
 import plotly.express as px # Import plotly.express
 import ast
 import nltk
+import nltk
+from nltk.downloader import DownloadError
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
 import re
@@ -22,12 +24,12 @@ import nltk
 # Coba unduh data NLTK yang dibutuhkan
 try:
     nltk.data.find('corpora/stopwords')
-except nltk.downloader.DownloadError: # Ini baris yang error
+except DownloadError: # Sekarang menggunakan 'DownloadError' secara langsung
     nltk.download('stopwords')
 
 try:
     nltk.data.find('tokenizers/punkt')
-except nltk.downloader.DownloadError: # Ini baris yang error
+except DownloadError: # Sekarang menggunakan 'DownloadError' secara langsung
     nltk.download('punkt')
 
 # ... tambahkan untuk data NLTK lain yang Anda gunakan
