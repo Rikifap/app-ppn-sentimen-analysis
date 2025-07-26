@@ -20,13 +20,14 @@ import io # Untuk download button
 # Coba unduh data NLTK yang dibutuhkan
 try:
     nltk.data.find('corpora/stopwords')
-except DownloadError: # Sekarang menggunakan 'DownloadError' secara langsung
+except Exception: # UBAH KE INI: Tangkap pengecualian umum
     nltk.download('stopwords')
 
 try:
     nltk.data.find('tokenizers/punkt')
-except DownloadError: # Sekarang menggunakan 'DownloadError' secara langsung
+except Exception: # UBAH KE INI: Tangkap pengecualian umum
     nltk.download('punkt')
+
 
 # ... tambahkan untuk data NLTK lain yang Anda gunakan
 
